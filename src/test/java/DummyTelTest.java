@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.ParseException;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +32,7 @@ class DummyTelTest {
 
     /**
      * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp có giảm giá)
+     * t = 0
      */
     @Test
     void normalStarTimeDiscountTest1() {
@@ -45,11 +46,72 @@ class DummyTelTest {
     }
 
     /**
-     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp không giảm giá)
+     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp có giảm giá)
+     * t = 23
      */
     @Test
     void normalStarTimeDiscountTest2() {
-        var startTime = 10;
+        var startTime = 23;
+        var dummyTel = new DummyTel(startTime);
+        var baseRateBeforeDiscount = dummyTel.getBaseRate();
+
+        dummyTel.startTimeDiscount();
+
+        assertEquals(dummyTel.getBaseRate(), baseRateBeforeDiscount / 2);
+    }
+
+    /**
+     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp có giảm giá)
+     * t = 18
+     */
+    @Test
+    void normalStarTimeDiscountTest3() {
+        var startTime = 18;
+        var dummyTel = new DummyTel(startTime);
+        var baseRateBeforeDiscount = dummyTel.getBaseRate();
+
+        dummyTel.startTimeDiscount();
+
+        assertEquals(dummyTel.getBaseRate(), baseRateBeforeDiscount / 2);
+    }
+
+    /**
+     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp có giảm giá)
+     * t = 7
+     */
+    @Test
+    void normalStarTimeDiscountTest4() {
+        var startTime = 7;
+        var dummyTel = new DummyTel(startTime);
+        var baseRateBeforeDiscount = dummyTel.getBaseRate();
+
+        dummyTel.startTimeDiscount();
+
+        assertEquals(dummyTel.getBaseRate(), baseRateBeforeDiscount / 2);
+    }
+
+    /**
+     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp không giảm giá)
+     * t = 8
+     */
+    @Test
+    void normalStarTimeDiscountTest5() {
+        var startTime = 8;
+        var dummyTel = new DummyTel(startTime);
+        var baseRateBeforeDiscount = dummyTel.getBaseRate();
+
+        dummyTel.startTimeDiscount();
+
+        assertEquals(dummyTel.getBaseRate(), baseRateBeforeDiscount);
+    }
+
+    /**
+     * Test case cho hàm chiết khấu theo thời điểm gọi (Trường hợp không giảm giá)
+     * t = 17
+     */
+    @Test
+    void normalStarTimeDiscountTest6() {
+        var startTime = 17;
         var dummyTel = new DummyTel(startTime);
         var baseRateBeforeDiscount = dummyTel.getBaseRate();
 
@@ -60,6 +122,7 @@ class DummyTelTest {
 
     /**
      * Test case cho hàm chiết khấu theo thời lượng gọi (Trường hợp có chiết khấu)
+     * T = 2
      */
     @Test
     void normalDurationDiscountTest1() {
@@ -75,12 +138,28 @@ class DummyTelTest {
     }
 
     /**
-     * Test case cho hàm chiết khấu theo thời lượng gọi (Trường hợp có chiết khấu)
+     * Test case cho hàm chiết khấu theo thời lượng gọi (Trường hợp không chiết khấu)
      */
     @Test
     void normalDurationDiscountTest2() {
         var startTime1 = 0;
         var dummyTel = new DummyTel(startTime1, 1);
+        var totalPriceBeforeDurationDiscount = 100;
+
+        dummyTel.setTotalPrice(totalPriceBeforeDurationDiscount);
+
+        dummyTel.durationDiscount();
+
+        assertEquals(dummyTel.getTotalPrice(), totalPriceBeforeDurationDiscount);
+    }
+
+    /**
+     * Test case cho hàm chiết khấu theo thời lượng gọi (Trường hợp không chiết khấu)
+     */
+    @Test
+    void normalDurationDiscountTest3() {
+        var startTime1 = 0;
+        var dummyTel = new DummyTel(startTime1, 0);
         var totalPriceBeforeDurationDiscount = 100;
 
         dummyTel.setTotalPrice(totalPriceBeforeDurationDiscount);
